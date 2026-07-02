@@ -1,19 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class UIScript
+public class UIScript : MonoBehaviour
 {
     public Button playButton;
     public Button settingsButton;
 
-    void awake()
+    void Awake()
     {
         playButton.onClick.AddListener(OnPlayButtonClicked);
         settingsButton.onClick.AddListener(OnSettingsButtonClicked);
     }
     public void OnPlayButtonClicked()
-    {     
-        Debug.Log("Play button clicked!");
+    {   Debug.Log("Play button clicked!");
+        SceneManager.LoadScene("GameplayScene");
     }
     public void OnSettingsButtonClicked()
     {
