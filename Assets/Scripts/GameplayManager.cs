@@ -2,11 +2,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.InputSystem;
 using TMPro;
 public class GameManager: MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    private InputManager inputManager;
     public LetterBucket letterBucket;
     public List<LetterEffect> lettersInPlay;
     public GameObject basicLetterPrefab;
@@ -45,6 +45,34 @@ public class GameManager: MonoBehaviour
             leftoverLetterObjects.Add(letterObject);
         }
     }
+    //TODO: Update so that tiles swap when clicked on
+    void Update()
+    {
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+    {
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            GameObject clickedObject = hit.collider.gameObject;
+            Debug.Log("ClickedObject name:" + clickedObject.name);
+            if(clickedObject.CompareTag("LetterBox"))
+            {
+                Debug.Log("Clicked on a LetterBox : " + clickedObject.name);
+                MoveTileToOppositePanel(clickedObject);
+            }
+            Debug.Log(clickedObject.name);
+            }
+            else
+            {
+                Debug.Log("No object was clicked.");
+            }
+        
+        Debug.Log("Mouse clicked at: " + mousePos);
+    }
+    }
     private GameObject CreateTile(LetterEffect letter)
     {
         GameObject letterPrefab;
@@ -76,6 +104,8 @@ public class GameManager: MonoBehaviour
         TMP_Text[] textComponents = letterPrefab.GetComponentsInChildren<TMP_Text>();
         TMP_Text letterText = textComponents[0];
         TMP_Text letterValueText = textComponents[1];
+        letterPrefab.tag ="LetterBox";
+        
         if(letter.GetLetter() == letterValues.BLANK)
         {
             letterText.text = " ";
@@ -91,13 +121,13 @@ public class GameManager: MonoBehaviour
     {
         if(letterObject.transform.parent == leftoverLettersPanel.transform)
         {
-            letterObject.transform.SetParent(dockPanel.transform);
+            letterObject.transform.SetParent(dockPanel.transform, false);
             dockLetterObjects.Add(letterObject);
             leftoverLetterObjects.Remove(letterObject);
         }
         else if(letterObject.transform.parent == dockPanel.transform)
         {
-            letterObject.transform.SetParent(leftoverLettersPanel.transform);
+            letterObject.transform.SetParent(leftoverLettersPanel.transform, false);
             leftoverLetterObjects.Add(letterObject);
             dockLetterObjects.Remove(letterObject);
         }

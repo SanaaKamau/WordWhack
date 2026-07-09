@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5420032598955658945}
   - component: {fileID: 5491374273922356651}
   - component: {fileID: 5190750810396877722}
-  m_Layer: 5
+  - component: {fileID: 496695188674193468}
+  m_Layer: 7
   m_Name: DoubleWordBox
-  m_TagString: Untagged
+  m_TagString: LetterBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,6 +78,52 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!61 &496695188674193468
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574252746027238368}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &5491497716642229530
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +135,7 @@ GameObject:
   - component: {fileID: 3140831037144314130}
   - component: {fileID: 2096139417461074420}
   - component: {fileID: 6463070037041663857}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: valueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +272,7 @@ GameObject:
   - component: {fileID: 3382871068405020}
   - component: {fileID: 1131115011295450253}
   - component: {fileID: 4623259003760454149}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: letterText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
