@@ -5,19 +5,39 @@ public class LetterBucket
 {
     private List<LetterEffect> letterBucket = new List<LetterEffect>();
     private List<LetterEffect> lettersInPlay = new List<LetterEffect>();
+    private int numOfTW;
+    private int numOfDW;
+    private int numOfTL;
+    private int numOfDL;
+    private int numOfHeal;
 
 
     public LetterBucket()
     {
-        letterBucket = GenericLetterGenerator.getLetterList();
+        numOfTW = 2;
+        numOfDW = 2;
+        numOfTL = 4;
+        numOfDL = 6;
+        numOfHeal = 5;
+        letterBucket = GenericLetterGenerator.GetLetterList(numOfTW, numOfDW, numOfTL, numOfDL, numOfHeal);
     }
+    public LetterBucket(int numOfTW, int numOfDW, int numOfTL, int numOfDL, int numOfHeal)
+    {
+        this.numOfTW = numOfTW;
+        this.numOfDW = numOfDW;
+        this.numOfTL = numOfTL;
+        this.numOfDL = numOfDL;
+        this.numOfHeal = numOfHeal;
+        letterBucket = GenericLetterGenerator.GetLetterList(numOfTW, numOfDW, numOfTL, numOfDL, numOfHeal);
+    }
+
     public void ResetLetterList()
     {
-        letterBucket = GenericLetterGenerator.getLetterList();
+        letterBucket = GenericLetterGenerator.GetLetterList(numOfTW, numOfDW, numOfTL, numOfDL, numOfHeal);
     }
-    public void RemoveLetters(letterValues  [] lettersToRemove)
+    public void RemoveLetters(LetterEffect[] lettersToRemove)
     {
-        foreach(letterValues letter in lettersToRemove)
+        foreach(LetterEffect letter in lettersToRemove)
         {
             letterBucket.Remove(letter);
         }
@@ -30,13 +50,13 @@ public class LetterBucket
         }
         
     }
-    public List<letterValues> GetLettersInPlay()
+    public List<LetterEffect> GetLettersInPlay()
     {
         return lettersInPlay;
     }
-    public letterValues DrawLetter()
+    public LetterEffect DrawLetter()
     {
-        letterValues drawnLetter = letterBucket[Random.Range(0, letterBucket.Count)];
+        LetterEffect drawnLetter = letterBucket[Random.Range(0, letterBucket.Count)];
         letterBucket.Remove(drawnLetter);
         return drawnLetter;
     }

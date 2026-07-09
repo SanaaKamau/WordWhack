@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 public static class GenericLetterGenerator
 {
-    public static List<LetterEffect> getLetterList(int numOfTW, int numOfDW, int numOfTL, int numOfDL, int numOfHeal)
+    public static List<LetterEffect> GetLetterList(int numOfTW, int numOfDW, int numOfTL, int numOfDL, int numOfHeal)
     {
         List<LetterEffect> letterList = new List<LetterEffect>();
         for (int i = 0; i < 12; i++)
@@ -53,6 +54,7 @@ public static class GenericLetterGenerator
         letterList.Add(new LetterEffect(letterValues.Q));
         letterList.Add(new LetterEffect(letterValues.X));
         letterList.Add(new LetterEffect(letterValues.Z));
+        letterList =AssignEffects(letterList, numOfTW, numOfDW, numOfTL, numOfDL, numOfHeal);
         return letterList;
     }
     public static int GetWordValue(List<LetterEffect> word)
@@ -64,15 +66,8 @@ public static class GenericLetterGenerator
         {
             bool isDL = letter.GetEffect() == LetterEffects.DL;
             bool isTL = letter.GetEffect() == LetterEffects.TL;
-            if (isDL)
-            {
-                wordValue += letter.GetLetterValue() * 2;
-            }
-            else if (isTL)
-            {
-               wordValue += letter.GetLetterValue() * 3;
-            }
-            else if (letter.GetEffect() == LetterEffects.DW)
+
+            if (letter.GetEffect() == LetterEffects.DW)
             {
                 hasDW = true;
             }
@@ -80,10 +75,8 @@ public static class GenericLetterGenerator
             {
                 hasTW = true;
             }
-            else
-            {
-                wordValue += letter.GetLetterValue();
-            }
+            wordValue += letter.GetLetterValue();
+            
             
         }
         if(hasDW)
@@ -96,7 +89,30 @@ public static class GenericLetterGenerator
         }
         return wordValue;
     }
+    //TODO: Update AssignEffects to assign effects to letters in a way that doesn't overwrite previously assigned effects
+    private static List<LetterEffect> AssignEffects(List<LetterEffect> letterList, int numOfTW, int numOfDW, int numOfTL, int numOfDL, int numOfHeal)
     {
-        
+        List<LetterEffect> tempList = new List<LetterEffect>(letterList);
+        for(int i = 0; i < numOfTW; i++)
+        {       
+            tempList[Random.Range(0, letterList.Count)].SetEffect(LetterEffects.TW);       
+        }
+        for (int i = 0; i < numOfDW; i++)
+        {
+            tempList[Random.Range(0, letterList.Count)].SetEffect(LetterEffects.DW);
+        }
+        for (int i = 0; i < numOfTL; i++)
+        {
+            tempList[Random.Range(0, letterList.Count)].SetEffect(LetterEffects.TL);
+        }
+        for (int i = 0; i < numOfDL; i++)
+        {
+            tempList[Random.Range(0, letterList.Count)].SetEffect(LetterEffects.DL);
+        }
+        for (int i = 0; i < numOfHeal; i++)
+        {
+            tempList[Random.Range(0, letterList.Count)].SetEffect(LetterEffects.Heal);
+        }
+        return tempList;
     }
 }

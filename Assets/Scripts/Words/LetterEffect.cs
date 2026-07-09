@@ -14,7 +14,23 @@ public class LetterEffect
     }
     public int GetLetterValue()
     {
-        return (int)LETTER;
+        if(EFFECT == LetterEffects.TL)
+        {
+            return (int)LETTER * 3;
+        }
+        else if(EFFECT == LetterEffects.DL)
+        {
+            return (int)LETTER * 2;
+        }
+        else if(EFFECT == LetterEffects.Heal)   
+        {
+            return (int)LETTER * 5;
+        }
+        else
+        {
+            return (int)LETTER;
+        }
+        
     }
   
     public LetterEffects GetEffect()
