@@ -6,6 +6,7 @@ using TMPro;
 public class GameManager: MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    private InputManager inputManager;
     public LetterBucket letterBucket;
     public List<LetterEffect> lettersInPlay;
     public GameObject basicLetterPrefab;
@@ -13,6 +14,8 @@ public class GameManager: MonoBehaviour
     public GameObject twLetterPrefab;
     public GameObject dlLetterPrefab;
     public GameObject tlLetterPrefab; 
+    public GameObject healLetterPrefab;
+
     public GameObject dockPanel;
     public GameObject leftoverLettersPanel;
     public TMP_Text wordPowerText;
@@ -62,6 +65,10 @@ public class GameManager: MonoBehaviour
         {
             letterPrefab = tlLetterPrefab;
         }
+        else if(letter.GetEffect() == LetterEffects.Heal)
+        {
+            letterPrefab = healLetterPrefab;
+        }
         else
         {
             letterPrefab = basicLetterPrefab;
@@ -69,10 +76,31 @@ public class GameManager: MonoBehaviour
         TMP_Text[] textComponents = letterPrefab.GetComponentsInChildren<TMP_Text>();
         TMP_Text letterText = textComponents[0];
         TMP_Text letterValueText = textComponents[1];
+        if(letter.GetLetter() == letterValues.BLANK)
+        {
+            letterText.text = " ";
+            letterValueText.text = "0";
+            return Instantiate(letterPrefab, leftoverLettersPanel.transform);
+        }   
         letterText.text = letter.GetLetter().ToString();
         letterValueText.text = letterValue.ToString();
         
-        return Instantiate(letterPrefab, dockPanel.transform);
+        return Instantiate(letterPrefab, leftoverLettersPanel.transform);
+    }
+    private void MoveTileToOppositePanel(GameObject letterObject)
+    {
+        if(letterObject.transform.parent == leftoverLettersPanel.transform)
+        {
+            letterObject.transform.SetParent(dockPanel.transform);
+            dockLetterObjects.Add(letterObject);
+            leftoverLetterObjects.Remove(letterObject);
+        }
+        else if(letterObject.transform.parent == dockPanel.transform)
+        {
+            letterObject.transform.SetParent(leftoverLettersPanel.transform);
+            leftoverLetterObjects.Add(letterObject);
+            dockLetterObjects.Remove(letterObject);
+        }
     }
     private void RemoveTile(GameObject letterObject)
     {
