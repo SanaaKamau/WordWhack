@@ -1,24 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class letterBucket
+public class LetterBucket
 {
-    List<letterValues> letterList = new List<letterValues>();
-    List<letterValues> lettersInPlay = new List<letterValues>();
+    private List<LetterEffect> letterBucket = new List<LetterEffect>();
+    private List<LetterEffect> lettersInPlay = new List<LetterEffect>();
 
-    public letterBucket()
+
+    public LetterBucket()
     {
-        letterList = GenericLetterGenerator.getLetterList();
+        letterBucket = GenericLetterGenerator.getLetterList();
     }
     public void ResetLetterList()
     {
-        letterList = GenericLetterGenerator.getLetterList();
+        letterBucket = GenericLetterGenerator.getLetterList();
     }
     public void RemoveLetters(letterValues  [] lettersToRemove)
     {
         foreach(letterValues letter in lettersToRemove)
         {
-            letterList.Remove(letter);
+            letterBucket.Remove(letter);
         }
     }
     public void DrawTwelve()
@@ -35,8 +36,8 @@ public class letterBucket
     }
     public letterValues DrawLetter()
     {
-        letterValues drawnLetter = letterList[Random.Range(0, letterList.Count)];
-        letterList.Remove(drawnLetter);
+        letterValues drawnLetter = letterBucket[Random.Range(0, letterBucket.Count)];
+        letterBucket.Remove(drawnLetter);
         return drawnLetter;
     }
     public void AddDifference()
@@ -54,7 +55,7 @@ public class letterBucket
     }
     private bool BucketIsEmpty()
     {
-        return letterList.Count == 0;
+        return letterBucket.Count == 0;
     }
    
     

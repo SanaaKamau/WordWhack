@@ -1,10 +1,14 @@
+
+using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 public class GameManager: MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public LetterBucket letterBucket;
     public GameObject letterPrefab;
 
-    public Awake()
+    public void Awake()
     {
         if(Instance != null && Instance != this)
         {
