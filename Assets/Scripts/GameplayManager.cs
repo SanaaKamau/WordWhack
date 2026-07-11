@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
+using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 public class GameManager: MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    DictionaryManager dictionary = new DictionaryManager();
     public LetterBucket letterBucket;
     public List<LetterEffect> lettersInPlay;
     public GameObject basicLetterPrefab;
@@ -15,6 +19,7 @@ public class GameManager: MonoBehaviour
     public GameObject dlLetterPrefab;
     public GameObject tlLetterPrefab; 
     public GameObject healLetterPrefab;
+    public Button hitButton;
 
     public GameObject dockPanel;
     public GameObject leftoverLettersPanel;
@@ -36,6 +41,7 @@ public class GameManager: MonoBehaviour
     }
   void Start()
     {
+        hitButton.onClick.AddListener(OnHitButtonCLicked);
         letterBucket = new LetterBucket();
         letterBucket.DrawTwelve();
         lettersInPlay = letterBucket.GetLettersInPlay();
@@ -117,7 +123,7 @@ public class GameManager: MonoBehaviour
         
         return Instantiate(letterPrefab, leftoverLettersPanel.transform);
     }
-    private void MoveTileToOppositePanel(GameObject letterObject)
+    public void MoveTileToOppositePanel(GameObject letterObject)
     {
         if(letterObject.transform.parent == leftoverLettersPanel.transform)
         {
@@ -145,6 +151,32 @@ public class GameManager: MonoBehaviour
         }
         dockLetterObjects.Clear();
     }
+    private void OnHitButtonCLicked()
+    {
+        if (dictionary.IsWord(GetCurrentWord()))
+        {
+            DestroyDockTiles();
+            
+        }
+        
+    }
+    private string GetCurrentWord()
+    {
+       
+        string word = "";
+        foreach (Transform child in dockPanel.transform)
+        {
+        TMP_Text[] textComponents = child.GetComponentsInChildren<TMP_Text>();
+        TMP_Text letterText = textComponents[0];
+            word += letterText.text;
+        }
+
+        Debug.Log("WORD IS:" +word);
+        return word;
+        }
+        
+    }
+    
     //private AddToLeftoverPanel()
 
-}
+

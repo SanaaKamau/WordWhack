@@ -366,6 +366,7 @@ MonoBehaviour:
   dlLetterPrefab: {fileID: 2574252746027238368, guid: 85a12848df87540aea6203467489d76c, type: 3}
   tlLetterPrefab: {fileID: 2574252746027238368, guid: 427c3074cde9148bda0abf1904e41e07, type: 3}
   healLetterPrefab: {fileID: 2574252746027238368, guid: 780434dc46aa54078bd951dbda5f6278, type: 3}
+  hitButton: {fileID: 946003961}
   dockPanel: {fileID: 1840631000}
   leftoverLettersPanel: {fileID: 660305325}
   wordPowerText: {fileID: 465316875}
