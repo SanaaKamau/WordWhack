@@ -1,13 +1,19 @@
 using UnityEngine;
 
-public class PlayerHealth
+public class HealthBar
 {
     private int health;
+    const int DEFAULTHEALTH = 100;
     private int maxHealth;
-    public PlayerHealth(int MaxHealth)
+    public HealthBar(int MaxHealth)
     {
         health = MaxHealth;
         maxHealth = MaxHealth;
+    }
+    public HealthBar()
+    {
+        health = DEFAULTHEALTH;
+        maxHealth = DEFAULTHEALTH;
     }
     public int TakeHit(int damage)
     {
@@ -39,6 +45,19 @@ public class PlayerHealth
             return maxHealth;
         }
         return health;
+    }
+    public int GetCurrentHealth()
+    {
+        return health;
+    }
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+    public void ResetSetMaxHealth( int mh)
+    {
+        maxHealth = mh;
+        health = mh;
     }
 
 }

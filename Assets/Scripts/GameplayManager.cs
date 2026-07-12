@@ -10,20 +10,29 @@ using System.Runtime.InteropServices.WindowsRuntime;
 public class GameManager: MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    DictionaryManager dictionary = new DictionaryManager();
+
+    //classes
+    DictionaryManager dictionary = new();
+    public HealthBar playerHealth = new();
+    public HealthBar enemyHealth = new();
     public LetterBucket letterBucket;
     public List<LetterEffect> lettersInPlay;
+
+    //UI Prefabs
     public GameObject basicLetterPrefab;
     public GameObject dwLetterPrefab;
     public GameObject twLetterPrefab;
     public GameObject dlLetterPrefab;
     public GameObject tlLetterPrefab; 
     public GameObject healLetterPrefab;
-    public Button hitButton;
 
+    //UI
+    public Button hitButton;
     public GameObject dockPanel;
     public GameObject leftoverLettersPanel;
     public TMP_Text wordPowerText;
+
+    //"Containers"
     private List<GameObject> leftoverLetterObjects = new List<GameObject>();
     private List<GameObject> dockLetterObjects = new List<GameObject>();
 
@@ -51,7 +60,6 @@ public class GameManager: MonoBehaviour
             leftoverLetterObjects.Add(letterObject);
         }
     }
-    //TODO: Update so that tiles swap when clicked on
     void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -153,9 +161,10 @@ public class GameManager: MonoBehaviour
     }
     private void OnHitButtonCLicked()
     {
-        if (dictionary.IsWord(GetCurrentWord()))
+        if (dictionary.IsWord(GetCurrentWord().ToUpper()))
         {
             DestroyDockTiles();
+            Debug.Log("Dock tiles destroyed");
             
         }
         
