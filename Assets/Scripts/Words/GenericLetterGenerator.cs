@@ -57,7 +57,7 @@ public static class GenericLetterGenerator
         letterList =AssignEffects(letterList, numOfTW, numOfDW, numOfTL, numOfDL, numOfHeal);
         return letterList;
     }
-    public static int GetWordValue(List<LetterEffect> word)
+    public static int GetWordAttackValue(List<LetterEffect> word)
     {
         int wordValue = 0;
         bool hasDW = false;
@@ -75,7 +75,11 @@ public static class GenericLetterGenerator
             {
                 hasTW = true;
             }
-            wordValue += letter.GetLetterValue();
+            if(letter.GetEffect() != LetterEffects.Heal)
+            {
+                wordValue += letter.GetLetterValue();
+            }
+            
             
             
         }
@@ -89,6 +93,37 @@ public static class GenericLetterGenerator
         }
         return wordValue;
     }
+    public static int GetWordHealValue(List<LetterEffect> word)
+    {
+        int wordHealValue = 0;
+        bool hasDW = false;
+        bool hasTW = false;
+        foreach(LetterEffect letter in word)
+        {
+            if(letter.GetEffect() == LetterEffects.Heal)
+            {
+                wordHealValue += letter.GetLetterValue();
+            }
+            if(letter.GetEffect() == LetterEffects.DW)
+            {
+                hasDW = true;
+            }
+            if(letter.GetEffect() == LetterEffects.TW)
+            {
+                hasTW = true;
+            }
+        }
+        if (hasTW)
+        {
+            wordHealValue *=2;
+        }
+        if (hasDW)
+        {
+            wordHealValue *=3;          
+        }
+        return wordHealValue;
+    }
+    
     //TODO: Update AssignEffects to assign effects to letters in a way that doesn't overwrite previously assigned effects
     private static List<LetterEffect> AssignEffects(List<LetterEffect> letterList, int numOfTW, int numOfDW, int numOfTL, int numOfDL, int numOfHeal)
     {

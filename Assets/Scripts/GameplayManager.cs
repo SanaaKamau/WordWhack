@@ -17,6 +17,10 @@ public class GameManager: MonoBehaviour
     public HealthBar enemyHealth = new();
     public LetterBucket letterBucket;
     public List<LetterEffect> lettersInPlay;
+    public List<LetterEffect> lettersInDock;
+
+    //Variables
+    
 
     //UI Prefabs
     public GameObject basicLetterPrefab;
@@ -86,6 +90,11 @@ public class GameManager: MonoBehaviour
         
         Debug.Log("Mouse clicked at: " + mousePos);
     }
+        UpdateWordValue();
+    }
+    private void UpdateWordValue()
+    {
+       // wordPowerText.text = GenericLetterGenerator.GetWordAttackValue(GetCurrentWord());
     }
     private GameObject CreateTile(LetterEffect letter)
     {
@@ -138,6 +147,7 @@ public class GameManager: MonoBehaviour
             letterObject.transform.SetParent(dockPanel.transform, false);
             dockLetterObjects.Add(letterObject);
             leftoverLetterObjects.Remove(letterObject);
+            //lettersInDock.Add
         }
         else if(letterObject.transform.parent == dockPanel.transform)
         {
@@ -155,7 +165,7 @@ public class GameManager: MonoBehaviour
     {
         foreach(GameObject letterObject in dockLetterObjects)
         {
-            Destroy(letterObject);
+            RemoveTile(letterObject);
         }
         dockLetterObjects.Clear();
     }
@@ -169,6 +179,10 @@ public class GameManager: MonoBehaviour
         }
         
     }
+    // private List<LetterEffect> GetCurrentWordEffect()
+    // {
+        
+    // }
     private string GetCurrentWord()
     {
        
