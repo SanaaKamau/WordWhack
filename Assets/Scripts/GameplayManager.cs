@@ -160,7 +160,7 @@ public class GameManager: MonoBehaviour
             dockLetters.Remove(letterObject);
         }
     }
-    private TileEffect GetCorrespondingTile(GameObject tile)
+    public TileEffect GetCorrespondingTile(GameObject tile)
     {
         TileEffect foundTile = null;
         foreach(TileEffect t in leftoverLetters)

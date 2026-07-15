@@ -5,6 +5,6 @@ public class LetterBox : MonoBehaviour, IPointerClickHandler
 {
     public void OnPointerClick(PointerEventData eventData)
 {
-    GameManager.Instance.MoveTileToOppositePanel(gameObject);
+    GameManager.Instance.MoveTileToOppositePanel(GameManager.Instance.GetCorrespondingTile(gameObject));
 }
 }
