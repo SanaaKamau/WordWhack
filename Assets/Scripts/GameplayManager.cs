@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEngine.Tilemaps;
 public class GameManager: MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -159,6 +160,7 @@ public class GameManager: MonoBehaviour
             leftoverLetters.Add(letterObject);
             dockLetters.Remove(letterObject);
         }
+        wordPowerText.text = GenericLetterGenerator.GetWordAttackValue(GetLetterEffectList(dockLetters)).ToString();
     }
     public TileEffect GetCorrespondingTile(GameObject tile)
     {
@@ -215,6 +217,15 @@ public class GameManager: MonoBehaviour
         Debug.Log("WORD IS:" +word);
         return word;
         }
+        private List<LetterEffect> GetLetterEffectList(List<TileEffect> tiles)
+    {
+        List<LetterEffect> effects = new List<LetterEffect>();
+        foreach (TileEffect t in tiles)
+        {
+            effects.Add(t.GetLetterEffect());
+        }
+        return effects;
+    }
         
     }
     
