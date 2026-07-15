@@ -37,8 +37,11 @@ public class GameManager: MonoBehaviour
     public TMP_Text wordPowerText;
 
     //"Containers"
-    private List<GameObject> leftoverLetterObjects = new List<GameObject>();
-    private List<GameObject> dockLetterObjects = new List<GameObject>();
+   // private List<GameObject> leftoverLetterObjects = new List<GameObject>();
+    //private List<GameObject> dockLetterObjects = new List<GameObject>();
+
+    private List<TileEffect> leftoverLetters = new List<TileEffect>();
+    private List<TileEffect> dockLetters = new List<TileEffect>();
 
    void Awake()
     {
@@ -61,7 +64,8 @@ public class GameManager: MonoBehaviour
         foreach(LetterEffect letter in lettersInPlay)
         {
             GameObject letterObject = CreateTile(letter);
-            leftoverLetterObjects.Add(letterObject);
+            //eftoverLetterObjects.Add(letterObject);
+            leftoverLetters.Add(new TileEffect(letterObject,letter));
         }
     }
     void Update()
@@ -79,7 +83,7 @@ public class GameManager: MonoBehaviour
             if(clickedObject.CompareTag("LetterBox"))
             {
                 Debug.Log("Clicked on a LetterBox : " + clickedObject.name);
-                MoveTileToOppositePanel(clickedObject);
+                MoveTileToOppositePanel(GetCorrespondingTile(clickedObject));
             }
             Debug.Log(clickedObject.name);
             }
@@ -140,49 +144,63 @@ public class GameManager: MonoBehaviour
         
         return Instantiate(letterPrefab, leftoverLettersPanel.transform);
     }
-    public void MoveTileToOppositePanel(GameObject letterObject)
+    public void MoveTileToOppositePanel(TileEffect letterObject)
     {
-        if(letterObject.transform.parent == leftoverLettersPanel.transform)
+        if(letterObject.GetObject().transform.parent == leftoverLettersPanel.transform)
         {
-            letterObject.transform.SetParent(dockPanel.transform, false);
-            dockLetterObjects.Add(letterObject);
-            leftoverLetterObjects.Remove(letterObject);
+            letterObject.GetObject().transform.SetParent(dockPanel.transform, false);
+            dockLetters.Add(new TileEffect(letterObject.GetObject(),letterObject.GetLetterEffect()));
+            leftoverLetters.Remove(letterObject);
             //lettersInDock.Add
         }
-        else if(letterObject.transform.parent == dockPanel.transform)
+        else if(letterObject.GetObject().transform.parent == dockPanel.transform)
         {
-            letterObject.transform.SetParent(leftoverLettersPanel.transform, false);
-            leftoverLetterObjects.Add(letterObject);
-            dockLetterObjects.Remove(letterObject);
+            letterObject.GetObject().transform.SetParent(leftoverLettersPanel.transform, false);
+            leftoverLetters.Add(letterObject);
+            dockLetters.Remove(letterObject);
         }
     }
-    private void RemoveTile(GameObject letterObject)
+    private TileEffect GetCorrespondingTile(GameObject tile)
     {
-        dockLetterObjects.Remove(letterObject);
-        Destroy(letterObject);
+        TileEffect foundTile = null;
+        foreach(TileEffect t in leftoverLetters)
+        {
+            if(t.GetObject() == tile)
+            {
+                return t;
+            }
+        }
+        foreach(TileEffect t in dockLetters)
+        {
+            if(t.GetObject() == tile)
+            {
+                return t;
+            }
+        }
+        return foundTile;
+    }
+    private void RemoveTile(TileEffect letterObject)
+    {
+        dockLetters.Remove(letterObject);
+        Destroy(letterObject.GetObject());
     }   
     private void DestroyDockTiles()
     {
-        foreach(GameObject letterObject in dockLetterObjects)
+        foreach(TileEffect TileEffect in dockLetters)
         {
-            RemoveTile(letterObject);
+            RemoveTile(TileEffect);
+        
         }
-        dockLetterObjects.Clear();
+        dockLetters.Clear();
     }
     private void OnHitButtonCLicked()
     {
         if (dictionary.IsWord(GetCurrentWord().ToUpper()))
         {
             DestroyDockTiles();
-            Debug.Log("Dock tiles destroyed");
-            
-        }
-        
+            Debug.Log("Dock tiles destroyed");        
+        }   
     }
-    // private List<LetterEffect> GetCurrentWordEffect()
-    // {
-        
-    // }
     private string GetCurrentWord()
     {
        
