@@ -5,9 +5,9 @@ public class DictionaryManager : MonoBehaviour
 {
     private HashSet<string> words = new HashSet<string>();
 
-    private void Awake()
+    public void LoadDictionary()
     {
-        TextAsset dictionary = Resources.Load<TextAsset>("Dictionary");
+        TextAsset dictionary = Resources.Load<TextAsset>("words");
 
         if (dictionary == null)
         {
@@ -18,6 +18,7 @@ public class DictionaryManager : MonoBehaviour
         foreach (string line in dictionary.text.Split('\n'))
         {
             string word = line.Trim().ToUpper();
+            //Debug.Log($"Loaded word: {word}");
 
             if (!string.IsNullOrEmpty(word))
                 words.Add(word);
@@ -26,6 +27,17 @@ public class DictionaryManager : MonoBehaviour
 
     public bool IsWord(string word)
     {
-        return words.Contains(word.ToUpper());
+        word = word.Trim().ToUpper();
+        bool isWord = words.Contains(word);
+        Debug.Log($"Checking if '{word}' is a valid word: {isWord}");
+        if (!isWord)
+        {
+            Debug.LogWarning($"Word '{word}' not found in the dictionary.");
+        }
+        if (isWord)
+        {
+            Debug.Log($"Word '{word}' found in the dictionary.");
+        }
+        return isWord;
     }
 }

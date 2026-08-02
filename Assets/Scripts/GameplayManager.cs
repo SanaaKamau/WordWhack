@@ -46,6 +46,7 @@ public class GameManager: MonoBehaviour
 
    void Awake()
     {
+        
         if(Instance != null && Instance != this)
         {
             Destroy(this);
@@ -54,6 +55,7 @@ public class GameManager: MonoBehaviour
         {
             Instance = this;
         }
+        dictionary.LoadDictionary();
        
     }
   void Start()
